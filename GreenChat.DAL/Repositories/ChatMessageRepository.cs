@@ -16,48 +16,8 @@ namespace GreenChat.DAL.Repositories
     {
         public ChatMessageRepository(ApplicationDbContext context, ILoggerFactory factory) : base(context, factory)
         {
+            DbSet = Context.ChatMessages;
         }
-
-        public override IQueryable<ChatMessage> GetAll()
-        {
-            return Context.ChatMessages;
-        }
-
-        public override Task<ChatMessage> Get(int id)
-        {
-            return Context.ChatMessages.FindAsync(id);
-        }
-
-        public override IQueryable<ChatMessage> Find(Expression<Func<ChatMessage, bool>> predicate)
-        {
-            return Context.ChatMessages.Where(predicate);
-        }
-
-        public override async Task Create(ChatMessage item)
-        {
-            await Context.ChatMessages.AddAsync(item);
-            await SaveChages();
-        }
-
-        public override void Update(ChatMessage item)
-        {
-            Context.Entry(item).State = EntityState.Modified;
-        }
-
-        public override async Task Delete(int id)
-        {
-            var chatMessage = await Context.ChatMessages.FindAsync(id);
-            Context.ChatMessages.Remove(chatMessage);
-            await SaveChages();
-        }
-
-        public override void Delete(ChatMessage chatMessage)
-        {
-            Context.ChatMessages.Remove(chatMessage);
-            SaveChages();
-        }
-
-        private bool _disposed = false;
 
         public async Task<ChatMessage> AddChatMessage(ApplicationUser userFrom, int chatId, string content, DateTimeOffset date)
         {
@@ -87,24 +47,6 @@ namespace GreenChat.DAL.Repositories
                 .ToListAsync();
 
             return list.OrderBy(message => message.Date).ToList();
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this._disposed)
-            {
-                if (disposing)
-                {
-                    Context.Dispose();
-                }
-            }
-            this._disposed = true;
-        }
-
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }        
+        }       
     }
 }

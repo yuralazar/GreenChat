@@ -111,6 +111,8 @@ namespace GreenChat.DAL.Data
 
         public DbSet<PrivateMessage> PrivateMessages { get; set; }
 
+        public DbSet<PrivateMessageStatus> PrivateMessageStatuses { get; set; }
+
         public DbSet<UnreadPrivateMessage> UnreadPrivateMessages { get; set; }
 
         public DbSet<Friend> Friends { get; set; }
@@ -118,6 +120,8 @@ namespace GreenChat.DAL.Data
         public DbSet<ChatMessage> ChatMessages { get; set; }
 
         public DbSet<UnreadChatMessage> UnreadChatMessages { get; set; }
+
+        public DbSet<ChatMessageStatus> ChatMessageStatuses { get; set; }
 
         public DbSet<ChatRoom> ChatRooms { get; set; }
 

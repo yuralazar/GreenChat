@@ -16,59 +16,7 @@ namespace GreenChat.DAL.Repositories
     {
         public ChatRoomUsersRepository(ApplicationDbContext context, ILoggerFactory factory) : base(context, factory)
         {
-        }
-
-        public override IQueryable<ChatRoomUser> GetAll()
-        {
-            return Context.ChatRoomUsers;
-        }
-
-        public override Task<ChatRoomUser> Get(int id)
-        {
-            return Context.ChatRoomUsers.FindAsync(id);
-        }
-
-        public override IQueryable<ChatRoomUser> Find(Expression<Func<ChatRoomUser, bool>> predicate)
-        {
-            return Context.ChatRoomUsers.Where(predicate);
-        }
-
-        public override async Task Create(ChatRoomUser item)
-        {
-            await Context.ChatRoomUsers.AddAsync(item);
-            await SaveChages();
-        }
-
-        public override void Update(ChatRoomUser item)
-        {
-            Context.Entry(item).State = EntityState.Modified;
-            SaveChages();
-        }
-
-        public override async Task Delete(int id)
-        {
-            var chatRoomUser = await Context.ChatRoomUsers.FindAsync(id);
-            Context.ChatRoomUsers.Remove(chatRoomUser);
-            await SaveChages();
-        }
-        private bool _disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this._disposed)
-            {
-                if (disposing)
-                {
-                    Context.Dispose();
-                }
-            }
-            this._disposed = true;
-        }
-
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            DbSet = Context.ChatRoomUsers;
         }
 
         public async Task AddChatRoomUsers(List<ApplicationUser> users, int chatRoomId)
@@ -168,11 +116,6 @@ namespace GreenChat.DAL.Repositories
                 UserID =  userFrom.Id,
                 Confirmed = true
             });
-        }
-
-        public override void Delete(ChatRoomUser item)
-        {
-            Context.ChatRoomUsers.Remove(item);
-        }        
+        }       
     }
 }

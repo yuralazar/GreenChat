@@ -17,8 +17,8 @@ namespace GreenChat.DAL
         public IPrivateMessageRepository PrivateMessages { get; }
         public IChatRoomRepository ChatRooms { get; }
         public IChatRoomUserRepository ChatRoomUsers { get; }
-        public IUnreadChatMessageRepository UnreadChatMessages { get; }
-        public IUnreadPrivateMessageRepository UnreadPrivateMessages { get; }
+        public IPrivateMessageStatusesRepository PrivateMessageStatuses { get; }
+        public IChatMessageStatusesRepository ChatMessageStatuses { get; }
 
         public UnitOfWork(
              ApplicationDbContext context
@@ -29,8 +29,8 @@ namespace GreenChat.DAL
             , IChatRoomRepository chatRoomRepository
             , IChatRoomUserRepository chatRoomUsersRepository
             , IPrivateMessageRepository privateMessageRepository
-            , IUnreadChatMessageRepository unreadChatMessages
-            , IUnreadPrivateMessageRepository unreadPrivateMessages)
+            , IPrivateMessageStatusesRepository privateMessageStatuses 
+            , IChatMessageStatusesRepository chatMessageStatuses)
         {
             Context = context;
             UserManager = userManager;
@@ -42,6 +42,8 @@ namespace GreenChat.DAL
             PrivateMessages = privateMessageRepository;
             UnreadChatMessages = unreadChatMessages;
             UnreadPrivateMessages = unreadPrivateMessages;
+            PrivateMessageStatuses = privateMessageStatuses;
+            ChatMessageStatuses = chatMessageStatuses;
         }   
 
         public async Task SaveAsync()
@@ -70,6 +72,6 @@ namespace GreenChat.DAL
                 PrivateMessages.Dispose();
             }
             this._disposed = true;
-        }        
+        }
     }
 }

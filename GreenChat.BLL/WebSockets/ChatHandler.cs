@@ -106,18 +106,14 @@ namespace GreenChat.BLL.WebSockets
             var userInfoTo = arguments.UserTo;
             var userFrom = await _unitOfWork.UserManager.FindByIdAsync(arguments.UserFrom.Id);
             var userTo = await _unitOfWork.UserManager.FindByIdAsync(userInfoTo.Id);
-            var mess = await _unitOfWork.PrivateMessages.AddPrivateMessage(userFrom, userTo, arguments.Message.Text, arguments.Message.Date);
-            //await _unitOfWork.SaveAsync();
+            var mess = await _unitOfWork.PrivateMessages.AddPrivateMessage(userFrom, userTo, arguments.Message.Text, arguments.Message.Date);                        
             arguments.Message.Id = mess.PrivateMessageID;
+            await _unitOfWork.PrivateMessageStatuses.AddSentStatus(mess.PrivateMessageID, arguments.Message.Date.DateTime);
             var sockets = _connectionManager.GetSocketsByUser(userTo);            
             SendFormat message = null;
             if (sockets != null && sockets.Count != 0)
                 message = _sendFormatFactory.PrivateMessage(arguments.UserFrom, arguments.Message);
-            else
-            {
-                await _unitOfWork.UnreadPrivateMessages.Create(mess.PrivateMessageID, userFrom, userTo, arguments.Message.Text, arguments.Message.Date);
-                await _unitOfWork.SaveAsync();
-            }            
+       
             return CreateResult(sockets, message);
         }
 
@@ -130,19 +126,6 @@ namespace GreenChat.BLL.WebSockets
             var mess = await _unitOfWork.ChatMessages.AddChatMessage(userFrom, chatInfo.Id, arguments.Message.Text, arguments.Message.Date);
             await _unitOfWork.SaveAsync();
             arguments.Message.Id = mess.ChatMessageID;
-
-            var count = 0;
-            foreach (var user in usersTo)
-            {
-                if (!_connectionManager.UserIsOnline(user))
-                {
-                    await _unitOfWork.UnreadChatMessages.Create(mess.ChatMessageID, userFrom, user, chatInfo.Id, arguments.Message.Text,
-                    arguments.Message.Date);
-                    count++;
-                }                   
-            }           
-            if (count>0)
-                await _unitOfWork.SaveAsync();
 
             var sockets = _connectionManager.GetSockets(usersTo);
             var message = _sendFormatFactory.ChatMessage(chatInfo, arguments.UserFrom, arguments.Message);

@@ -276,10 +276,6 @@
       <Project>{ab8b448c-dd74-4d60-a041-3e5d03a32180}</Project>
       <Name>MainMenu</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GreenChat.Client_WPF\GreenChat.Client_WPF.csproj">
-      <Project>{1EB2DC78-DB48-43C1-BAC6-CA5D97D97D92}</Project>
-      <Name>GreenChat.Client_WPF</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GreenChat.Data\GreenChat.Data.csproj">
       <Project>{03865f5c-82b4-48a0-a1f9-13a3563913a2}</Project>
       <Name>GreenChat.Data</Name>

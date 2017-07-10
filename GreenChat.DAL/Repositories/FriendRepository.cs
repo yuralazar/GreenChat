@@ -16,62 +16,9 @@ namespace GreenChat.DAL.Repositories
     {
         public FriendRepository(ApplicationDbContext context, ILoggerFactory factory) : base(context, factory)
         {
+            DbSet = Context.Friends;
         }
-
-        public override IQueryable<Friend> GetAll()
-        {
-            return Context.Friends;
-        }
-
-        public override Task<Friend> Get(int id)
-        {
-            return Context.Friends.FindAsync(id);
-        }
-
-        public override IQueryable<Friend> Find(Expression<Func<Friend, bool>> predicate)
-        {
-            return Context.Friends.Where(predicate);
-        }
-
-        public override async Task Create(Friend item)
-        {
-            await Context.Friends.AddAsync(item);
-            await SaveChages();
-        }
-
-        public override void Update(Friend item)
-        {
-            Context.Entry(item).State = EntityState.Modified;
-            SaveChages();
-        }
-
-        public override async Task Delete(int id)
-        {
-            var friend =await Context.Friends.FindAsync(id);
-            Context.Friends.Remove(friend);
-            await SaveChages();
-        }
-
-        private bool _disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this._disposed)
-            {
-                if (disposing)
-                {
-                    Context.Dispose();
-                }
-            }
-            this._disposed = true;
-        }
-
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }        
-
+        
         public async Task<List<ApplicationUser>> GetPotentialFriends(ApplicationUser user)
         {
             var query =
@@ -115,12 +62,6 @@ namespace GreenChat.DAL.Repositories
                 select fr1.Friend2;
 
             return await query.ToListAsync();
-        }
-
-        public override void Delete(Friend friend)
-        {
-            Context.Friends.Remove(friend);
-            SaveChages();
         }
 
     }

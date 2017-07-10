@@ -4,11 +4,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using GreenChat.DAL.Data;
+using GreenChat.Data.Instances;
 
 namespace GreenChat.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170622141311_Initial")]
+    [Migration("20170710125855_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,6 +94,24 @@ namespace GreenChat.DAL.Migrations
                     b.ToTable("ChatMessages");
                 });
 
+            modelBuilder.Entity("GreenChat.DAL.Models.ChatMessageStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ChatMessageId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatMessageId");
+
+                    b.ToTable("ChatMessageStatuses");
+                });
+
             modelBuilder.Entity("GreenChat.DAL.Models.ChatRoom", b =>
                 {
                     b.Property<int>("ChatRoomID")
@@ -170,6 +189,24 @@ namespace GreenChat.DAL.Migrations
                     b.HasIndex("SenderID");
 
                     b.ToTable("PrivateMessages");
+                });
+
+            modelBuilder.Entity("GreenChat.DAL.Models.PrivateMessageStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("PrivateMessageId");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PrivateMessageId");
+
+                    b.ToTable("PrivateMessageStatuses");
                 });
 
             modelBuilder.Entity("GreenChat.DAL.Models.UnreadChatMessage", b =>
@@ -342,6 +379,14 @@ namespace GreenChat.DAL.Migrations
                         .HasForeignKey("ChatRoomUserID");
                 });
 
+            modelBuilder.Entity("GreenChat.DAL.Models.ChatMessageStatus", b =>
+                {
+                    b.HasOne("GreenChat.DAL.Models.ChatMessage", "ChatMessage")
+                        .WithMany()
+                        .HasForeignKey("ChatMessageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("GreenChat.DAL.Models.ChatRoom", b =>
                 {
                     b.HasOne("GreenChat.DAL.Models.ApplicationUser", "User")
@@ -380,6 +425,14 @@ namespace GreenChat.DAL.Migrations
                     b.HasOne("GreenChat.DAL.Models.ApplicationUser", "Sender")
                         .WithMany("Senders")
                         .HasForeignKey("SenderID");
+                });
+
+            modelBuilder.Entity("GreenChat.DAL.Models.PrivateMessageStatus", b =>
+                {
+                    b.HasOne("GreenChat.DAL.Models.PrivateMessage", "PrivateMessage")
+                        .WithMany()
+                        .HasForeignKey("PrivateMessageId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("GreenChat.DAL.Models.UnreadChatMessage", b =>

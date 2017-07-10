@@ -16,41 +16,8 @@ namespace GreenChat.DAL.Repositories
     {
         public PrivateMessageRepository(ApplicationDbContext context, ILoggerFactory factory) : base(context, factory)
         {
-        }
-
-        public override IQueryable<PrivateMessage> GetAll()
-        {
-            return Context.PrivateMessages;
-        }
-
-        public override Task<PrivateMessage> Get(int id)
-        {
-            return Context.PrivateMessages.FindAsync(id);
-        }
-
-        public override IQueryable<PrivateMessage> Find(Expression<Func<PrivateMessage, bool>> predicate)
-        {
-            return Context.PrivateMessages.Where(predicate);
-        }
-
-        public override async Task Create(PrivateMessage item)
-        {
-            await Context.PrivateMessages.AddAsync(item);
-            await SaveChages();
-        }
-
-        public override void Update(PrivateMessage item)
-        {
-            Context.Entry(item).State = EntityState.Modified;
-            SaveChages();
-        }
-
-        public override async Task Delete(int id)
-        {
-            var privateMessage = await Context.PrivateMessages.FindAsync(id);
-            Context.PrivateMessages.Remove(privateMessage);
-            await SaveChages();
-        }
+            DbSet = Context.PrivateMessages;
+        }       
 
         public async Task<PrivateMessage> AddPrivateMessage(ApplicationUser sernder, ApplicationUser reciever, string content, DateTimeOffset date)
         {
@@ -83,26 +50,6 @@ namespace GreenChat.DAL.Repositories
                 .ToListAsync();                                
 
             return list.OrderBy(message => message.Date).ToList();
-        }
-
-        private bool _disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this._disposed)
-            {
-                if (disposing)
-                {
-                    Context.Dispose();
-                }
-            }
-            this._disposed = true;
-        }
-
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         public override void Delete(PrivateMessage item)
