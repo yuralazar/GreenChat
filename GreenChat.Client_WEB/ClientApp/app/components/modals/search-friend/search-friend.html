@@ -1,0 +1,28 @@
+<div class="container-fluid custom-modal-container">
+    <div class="row custom-modal-header">
+        <div class="col-sm-12">
+            <h1>Search friend</h1>
+        </div>
+    </div>
+    <div class="row" [ngClass]="{'myclass' : shouldUseMyClass}">
+        <div class="col-xs-12">
+            <form novalidate (ngSubmit)="searchFriend()">
+                <div class="dialoge dialoge-big">
+                    <input type="text" placeholder="Fiend's email" class="form-control" [(ngModel)]="searchEmail" name="searchEmail"/>
+                    <button class="btn btn-default">Search</button>
+                </div>
+            </form>
+            <div *ngIf="friendFound">
+                <confirm-decline (confirmed)="confirmation($event)" ></confirm-decline>
+            </div>
+            <div [ngSwitch]="infoNumb">
+                <template [ngSwitchCase]="1">Friend is already in list!</template>
+                <template [ngSwitchCase]="2">Friend not found!</template>
+                <template [ngSwitchCase]="3">You cannot add yourself to friends list!</template>
+                <template [ngSwitchCase]="4">Now wait for a user to confirm friendship</template>
+                <template ngSwitchDefault></template>
+            </div>
+            <button class="btn btn-success" (click)="closeModal()">Close</button>
+        </div>
+    </div>
+</div>

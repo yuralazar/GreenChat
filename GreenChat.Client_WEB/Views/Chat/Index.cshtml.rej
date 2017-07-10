@@ -1,0 +1,10 @@
+diff a/MAINPROJECT_1.1/GreenChat/GreenChat.Client_WEB/Views/Chat/Index.cshtml b/MAINPROJECT_1.1/GreenChat/GreenChat.Client_WEB/Views/Chat/Index.cshtml	(rejected hunks)
+@@ -2,7 +2,7 @@
+     ViewData["Title"] = "Green Chat";
+ }
+ 
+-<!-- <app asp-prerender-module="ClientApp/dist/main-server"  >Loading...</app> -->
++<!-- <app asp-prerender-module="CustomClientWebSocketApp/dist/main-server"  >Loading...</app> -->
+ <app>Loading...</app>
+ 
+ <script src="~/dist/vendor.js" asp-append-version="true"></script>

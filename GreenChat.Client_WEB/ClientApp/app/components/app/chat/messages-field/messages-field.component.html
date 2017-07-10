@@ -1,0 +1,11 @@
+<div #messageList class="green-messages" (scroll)="onScroll()" id="style-15">
+    <busy *ngIf="showBusy"></busy>
+    <ul id="messages" class="green-list-m">
+        <div *ngFor="let mess of messages; let i = index">
+            <div *ngIf="needToShowDate(i)" class="date-box">
+                {{mess.content.date | date :'dd - MMM - yyyy'}}
+            </div>
+            <message-item [message]="mess"></message-item>
+        </div>
+    </ul>
+</div>

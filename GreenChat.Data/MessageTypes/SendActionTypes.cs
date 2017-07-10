@@ -1,0 +1,4 @@
+﻿namespace GreenChat.Data.MessageTypes
+{
+
+}

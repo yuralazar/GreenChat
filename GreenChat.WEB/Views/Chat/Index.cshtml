@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Green Chat";
+}
+<div class="dialoges">
+    <div class="dialoge">
+        <input type="text" id="searchEmail" placeholder="Fiend's email" class="form-control" />
+        <button id="searchFriend" class="btn btn-success">Search</button>
+    </div>
+
+    <div class="dialoge">
+        <input type="text" id="chatName" placeholder="Chat room name" class="form-control" />
+        <button id="createChat" class="btn btn-success">Create</button>
+    </div>
+</div>    
+
+<div class="dialoges">       
+    
+    <div class="dialoge" id="listTabs">
+        <ul class="nav nav-tabs">
+            <li class="active"><a id="friendsTab" href="#friends" data-toggle="tab">Friends</a></li>
+            <li><a id="chatsTab" href="#chats" data-toggle="tab">Chats</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="friends">
+                <ul class="green-list" id="friendsList"></ul>
+            </div>
+            <div class="tab-pane" id="chats">
+                <ul class="green-list" id="chatList"></ul>
+            </div>
+        </div>
+    </div>   
+
+    <div class="mess-field">
+        <div class="chatList">
+            <ul id="messages" class="green-list-m"></ul>
+        </div>
+        <div class="dialoge dialoge-big">            
+            <input type="text" id="messageInput" placeholder="Message text" class="form-control" />
+            <button id="sendMessage" class="btn btn-success">Send</button>
+        </div>
+    </div> 
+
+</div>    
+
+<script language="javascript" type="text/javascript">
+    var currentUser = {
+        "id": "@ViewData["userId"]",
+        "email": "@ViewData["userEmail"]"
+    }
+</script>
+
+<script defer src="~/js/Chat/WebSocketManager.js" asp-append-version="true"></script>
+<script defer src="~/js/Chat/SendingActions.js" asp-append-version="true"></script>
+<script defer src="~/js/Chat/Helpers.js" asp-append-version="true"></script>
+<script defer src="~/js/Chat/Messages.js" asp-append-version="true"></script>
+<script defer src="~/js/Chat/ChatRooms.js" asp-append-version="true"></script> 
+<script defer src="~/js/Chat/Friends.js" asp-append-version="true"></script> 
+<script defer src="~/js/Chat/Main.js" asp-append-version="true"></script>    

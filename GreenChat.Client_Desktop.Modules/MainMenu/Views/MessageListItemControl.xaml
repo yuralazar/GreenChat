@@ -1,0 +1,182 @@
+﻿<UserControl x:Class="GreenChat.Client_Desktop.Modules.MainMenu.Views.MessageListItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/" 
+             xmlns:local="clr-namespace:GreenChat.Client_Desktop.Modules.MainMenu.ViewModels"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:valueConverters="clr-namespace:GreenChat.Client_Desktop.Modules.MainMenu.ValueConverters"
+             mc:Ignorable="d"
+             >
+    <!--<Border Padding="5" >
+        <Grid>
+
+             Profile picture--> 
+            <!--<Border VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Margin="0 7.5 0 7.5"
+                    Visibility="{Binding Incoming , Converter={valueConverters:BooleanToVisiblityConverter}}"
+                    CornerRadius="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                    Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                    Width="35"
+                    Background="Green"
+                    BorderBrush="{StaticResource ForegroundLightBrush}"
+                    BorderThickness="1"
+            >
+                <TextBlock Text="{Binding Content}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Foreground="{StaticResource ForegroundLightBrush}"
+                           FontFamily="{StaticResource LatoRegular}"
+                />
+            </Border>
+
+             --><!--Chat message container--><!-- 
+            <Grid Margin="25 0 25 0"
+                  HorizontalAlignment="{Binding Incoming, Converter={valueConverters:SendByMeValueConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                 --><!--Speech bubble rectangle--><!-- 
+                <Border CornerRadius="10"
+                        Padding="15"
+                >
+
+                     --><!--Message text--><!-- 
+                    <TextBlock VerticalAlignment="Center"
+                               TextWrapping="Wrap"
+                               FontFamily="{StaticResource LatoRegular}"
+                               Foreground="{StaticResource ForegroundDarkBrush}"
+                               Text="{Binding Content.Text}"
+                    />
+
+                </Border>
+
+                 --><!--Chat bubble anchor--><!-- 
+                <Path Grid.Row="1" 
+                      Stroke="Black"
+                      Panel.ZIndex="1"
+                      Margin="15 -1 15 0"
+                      Data="M 0,0 L 10,10 L 20,0 L 0,0" 
+                      StrokeThickness="0"
+                />
+                 --><!--Time containers--><!-- 
+                <StackPanel Name="ExtraDetails" 
+                            Grid.Row="2"
+                            Opacity="0"
+                            Orientation="Horizontal">
+
+                     --><!--Sent time--><!-- 
+                    <TextBlock Text="{Binding Content.Text}"
+                               Foreground="{StaticResource ForegroundLightBrush}"
+                               HorizontalAlignment="Right"
+                               FontSize="{StaticResource FontSizeSmall}"
+                               FontFamily="{StaticResource LatoRegular}"
+                               Margin="0 0 15 0"
+                    />
+
+                     --><!--Read time--><!-- 
+                    <TextBlock Text="{Binding MessageReadTime}"
+                               Foreground="{StaticResource ForegroundDarkBrush}"
+                               HorizontalAlignment="Right"
+                               FontSize="{StaticResource FontSizeSmall}"
+                               FontFamily="{StaticResource LatoRegular}"
+                    />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>-->
+    <Border Padding="5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--User from email for chat message--> 
+            <Border Grid.Row="0" 
+                    Margin="35 0 10 5"
+                    Visibility="{Binding IsChatMessage, Converter={valueConverters:BooleanToVisiblityConverter}, ConverterParameter=false}">
+
+                <TextBlock Text="{Binding StringFormat=From: {0}, Path=UserFrom.Email}"
+                           HorizontalAlignment="{Binding Incoming, Converter={valueConverters:SendByMeValueConverter}}"
+                           FontFamily="{StaticResource LatoRegular}"
+                           Foreground="{StaticResource ForegroundMainBrush}"
+                           Visibility="{Binding Incoming, Converter={valueConverters:BooleanToVisiblityConverter}, ConverterParameter=false}"
+                    />
+            </Border>
+            
+           <!--Profile picture--> 
+            <Border Grid.Row="1" VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Margin="0 7.5 0 7.5"
+                    Visibility="{Binding Incoming, Converter={valueConverters:BooleanToVisiblityConverter}, ConverterParameter=true}"
+                    CornerRadius="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                    Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                    Width="35"
+                    BorderBrush="{StaticResource MessageBubleBackgroundBrush}"
+                    BorderThickness="1.3"
+                    Background="{Binding UserFrom.Email, Converter={valueConverters:EmailToAvatarColorValueConverter}}"
+            >
+               
+            <TextBlock Text="{Binding UserFrom.Email, Converter={valueConverters:EmailToInitialsValueConverter}}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Foreground="{StaticResource ForegroundDarkBrush}"
+                           FontFamily="{StaticResource LatoRegular}"
+                           FontSize="{StaticResource FontSizeMedium}"/>
+ 
+            </Border>
+
+             <!--Chat message container--> 
+            <Grid Grid.Row="1" Margin="25 0 25 0" 
+                  HorizontalAlignment="{Binding Incoming, Converter={valueConverters:SendByMeValueConverter}}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Speech bubble rectangle -->
+                <Border CornerRadius="10"
+                        Padding="15" 
+                        Background="{Binding Incoming, Converter={valueConverters:SendByMeBackgroundValueConverter}}">
+
+                     <!--Message text--> 
+                    <TextBlock VerticalAlignment="Center"
+                               TextWrapping="Wrap"
+                               FontFamily="{StaticResource LatoRegular}"
+                               Foreground="{StaticResource ForegroundDarkBrush}"
+                               Text="{Binding Content.Text}"
+                               FontSize="{StaticResource FontSizeSmall}"
+                    />
+
+                </Border>
+
+                 <!--Chat bubble anchor--> 
+                <Path Grid.Row="1" 
+                      Stroke="Black"
+                      Panel.ZIndex="1"
+                      Margin="15 -1 15 0"
+                      Data="M 0,0 L 10,10 L 20,0 L 0,0" 
+                      StrokeThickness="0" 
+                      HorizontalAlignment="{Binding Incoming, Converter={valueConverters:SendByMeValueConverter}}"
+                      Fill="{Binding Incoming, Converter={valueConverters:SendByMeBackgroundValueConverter}}"/>
+
+                <TextBlock Grid.Row="2"
+                           Text="{Binding Content.Date, Converter={valueConverters:TimeToStringValueConverter}}"
+                           Foreground="{StaticResource ForegroundMainBrush}"
+                           HorizontalAlignment="{Binding Incoming, Converter={valueConverters:SendByMeValueConverter}}"
+                           FontSize="10px"
+                />
+
+            </Grid>
+
+        </Grid>
+    </Border>
+</UserControl>

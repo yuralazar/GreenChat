@@ -1,0 +1,12 @@
+<li [ngClass]="{'green-message':true, 'self': !message.incoming}">
+    <div class="green-date">
+        {{message.content.date | datex :'HH:mm'}}
+    </div>
+    <!-- <div class="green-message-text">-->
+    <div [ngClass]="{'from-them':message.incoming, 'from-me':!message.incoming}">
+        <span class="green-user-text" *ngIf="isChatMessage(message) && message.incoming">
+            {{message.userFrom.email}}
+        </span>
+        {{message.content.text}}
+    </div>
+</li>

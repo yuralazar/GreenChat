@@ -1,0 +1,6 @@
+<form novalidate (ngSubmit)="sendMessage()">
+    <div class="dialoge dialoge-big">
+        <input type="text" placeholder="Message text" class="form-control" [(ngModel)]="messageInput" name="messageInput"/>
+        <button id="sendMessage" class="btn btn-success">Send</button>
+    </div>
+</form>

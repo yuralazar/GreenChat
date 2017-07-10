@@ -1,0 +1,163 @@
+﻿
+div#chat-container {    
+    width: 80%;
+    margin: 30px auto;    
+}
+
+.dialoges {
+    display: flex;
+    flex-direction: row;
+}
+
+.dialoge {    
+    width: 15%;
+    min-width: 200px;
+    border-style: solid;
+    border-width: thin;
+    padding: 10px;
+    margin: 6px;
+    border-radius: 5px;
+    border-color: #5cb85c;
+}
+
+.dialoge-big {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    width: auto;
+}
+
+    .dialoge-big input {
+        margin-right: 2px;
+        max-width: none;
+        flex-grow: 1;
+    }
+
+    .dialoge-big button {        
+        vertical-align: top;
+    }
+
+.mess-field {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.chatList {
+    display: flex;
+    flex-grow: 1;
+    padding: 10px;
+    min-width: 600px;
+    height: 500px;
+    margin: 6px;
+    margin-bottom: 6px;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 5px;
+    border-color: #5cb85c;
+    overflow: auto;
+}
+
+.btn-green {
+    border-radius: 5px;
+}
+
+.btn-default-green {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.navbar-green {
+    background: linear-gradient(rgb(49, 89, 62),rgb(10, 99, 40));
+}
+
+.green-list-m {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+}
+
+    .green-list-m .green-message {
+        display: flex;        
+    }
+    .green-message.self {        
+        flex-direction: row-reverse;
+    }
+    .green-message-btn {
+        flex-direction: row;
+    }
+    .green-message .green-message-text {
+        background: linear-gradient(rgb(210, 249, 162), rgb(187, 239, 124));
+        border-radius: 6px;
+        padding: 8px;
+        margin: 3px;
+    }
+
+    .green-message-text.green-info {
+        background: linear-gradient(rgb(238, 255, 86),rgb(187, 204, 44));
+    }
+
+    .green-message-text.green-warn {
+        background: linear-gradient(rgb(255, 228, 79),rgb(255, 220, 33));
+    }
+
+@media (min-width: 1600px) {
+    .container {
+        width: 1550px;
+    }
+}
+
+.green-list {
+    background-color: #FFF;
+    list-style: none;
+    margin: 0;
+    padding: 5px;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.green-list-item {
+    display: flex;
+    height: 20%;
+    max-height: 40px;
+    justify-content: space-between;
+    padding: 2px 2px;
+}
+
+.green-friend-online {
+    flex-grow: 1;
+    border-radius: 3px;
+    border-color: #cccccc;
+    text-align: center;
+    cursor: pointer;
+    background: linear-gradient(rgb(210, 249, 162), rgb(187, 239, 124))
+}
+
+    .green-friend-online:hover {
+        background: linear-gradient(rgb(170, 255, 66), rgb(146, 221, 55))
+    }
+
+    .green-friend-online.active {
+        background: linear-gradient(rgb(146, 221, 55), rgb(68, 157, 68));
+        color: white;
+    }
+
+.green-friend-offline {
+    flex-grow: 1;
+    border-radius: 3px;
+    border-color: #cccccc;
+    text-align: center;
+    cursor: pointer;
+    background: linear-gradient(rgb(245, 255, 234), rgb(164, 178, 149))
+}
+
+    .green-friend-offline:hover {
+        background: linear-gradient(rgb(245, 255, 234), rgb(129, 140, 117))
+    }
+
+    .green-friend-offline.active {
+        background: linear-gradient(rgb(146, 221, 55), rgb(68, 157, 68));
+        color: white;
+    }

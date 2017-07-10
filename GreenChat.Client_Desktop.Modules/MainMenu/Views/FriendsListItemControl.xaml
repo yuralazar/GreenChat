@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="GreenChat.Client_Desktop.Modules.MainMenu.Views.FriendsListItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:valueconverters="clr-namespace:GreenChat.Client_Desktop.Modules.MainMenu.ValueConverters">
+    <!-- Content -->
+    <!--
+    <Border Background="{StaticResource BackgroundGreenBrush}">
+        <Grid  Background="Transparent">
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="Auto" />
+                -->
+    <!-- Main content -->
+    <!--
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            -->
+    <!-- New Message Indicator Bar -->
+    <!--
+            <Border Background="Red" 
+                    Width="4"
+                    HorizontalAlignment="Left"
+            />
+
+            -->
+    <!-- Profile picture padding -->
+    <!--
+            <Border Grid.Column="0" Padding="8">
+                -->
+    <!-- Profile picture background -->
+    <!--
+                <Border Background="Blue" 
+                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                        CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+                    -->
+    <!-- Profile picture initials -->
+    <!--
+                    <TextBlock Text="{Binding Id}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource BackgroundLightBrush}"
+                               FontSize="{StaticResource FontSizeRegular}"
+                               FontFamily="{StaticResource LatoRegular}"
+                    />
+                </Border>
+            </Border>
+
+            -->
+    <!-- Main content -->
+    <!--
+            <Border Grid.Column="1" Padding="0 0 8 0">
+                <StackPanel VerticalAlignment="Center">
+                    -->
+    <!-- Name-->
+    <!--
+                    <TextBlock Text="{Binding Email}"
+                               Foreground="{StaticResource BackgroundLightBrush}"
+                               TextTrimming="CharacterEllipsis"
+                               FontFamily="{StaticResource LatoRegular}"
+                    />
+                    -->
+    <!-- Message -->
+    <!--
+                    <TextBlock Text="Message"
+                               Foreground="{StaticResource ForegroundDarkBrush}"
+                               TextTrimming="CharacterEllipsis"
+                               FontFamily="{StaticResource LatoRegular}"
+                    />
+
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>-->
+
+    <!-- Content -->
+    <Border x:Name="background" Background="{StaticResource ForegroundLightBrush}">
+        <Grid x:Name="container" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <!-- New Message Indicator Bar -->
+                <!-- Profile picture -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Main content -->
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- New Message Indicator Bar -->
+            <Border Background="{Binding Path=FriendUser.Online, Converter={valueconverters:OnlineToColorValueConverter}}" 
+                                        Width="4"
+                                        HorizontalAlignment="Left"/>
+
+            <!-- Profile picture padding -->
+            <Border Grid.Column="0" Padding="5 10">
+                <!-- Profile picture background -->
+                <Border Background="{Binding Path=FriendUser.Email, Converter={valueconverters:EmailToAvatarColorValueConverter}}" 
+                                            Height="35"
+                                            Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                            CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+                    <!-- Profile picture initials -->
+                    <TextBlock Text="{Binding Path=FriendUser.Email, Converter={valueconverters:EmailToInitialsValueConverter}}"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="{StaticResource ForegroundLightBrush}"
+                                                   FontSize="{StaticResource FontSizeLarge}"
+                                                   FontFamily="{StaticResource LatoRegular}"
+                                        />
+                </Border>
+            </Border>
+
+            <!-- Main content -->
+            <Border Grid.Column="1" Padding="0 0 8 0">
+                <StackPanel VerticalAlignment="Center">
+                    <!-- Name-->
+                    <TextBlock Text="{Binding Path=FriendUser.Email}"
+                                                   Padding="0 0 0 2"
+                                                   Foreground="{StaticResource BackgroundGreenBrush}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   FontFamily="{StaticResource LatoRegular}"
+                                        />
+                    <!-- Message -->
+                    <TextBlock Text="{Binding Path=NewMessages}"
+                                                   Padding="0 2 0 0"
+                                                   Foreground="{StaticResource ForegroundDarkBrush}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   FontFamily="{StaticResource LatoRegular}"
+                                        />
+
+                </StackPanel>
+                <!--, Converter={valueconverters:FriendToCountUnreadMessageValueConverter}-->
+            </Border>
+
+        </Grid>
+    </Border>
+
+    <!-- TO DO Hover effect -->
+
+</UserControl>

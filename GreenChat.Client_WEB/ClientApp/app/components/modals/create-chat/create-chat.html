@@ -1,0 +1,18 @@
+<div class="container-fluid custom-modal-container">
+    <div class="row custom-modal-header">
+        <div class="col-sm-12">
+            <h1>Create chat room</h1>
+        </div>
+    </div>
+    <div class="row" [ngClass]="{'myclass' : shouldUseMyClass}">
+        <div class="col-xs-12">
+            <form novalidate (ngSubmit)="createChatRoom()">
+                <div class="dialoge dialoge-big">
+                    <input type="text" placeholder="Chat room name" class="form-control" [(ngModel)]="chatName" name="chatName"/>
+                    <button class="btn btn-default">Create</button>
+                </div>
+            </form>
+            <button class="btn btn-success" (click)="closeModal()">Close</button>
+        </div>
+    </div>
+</div>

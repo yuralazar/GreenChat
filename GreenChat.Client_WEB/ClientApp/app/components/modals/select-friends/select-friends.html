@@ -1,0 +1,20 @@
+<div class="container-fluid custom-modal-container">
+    <div class="row custom-modal-header">
+        <div class="col-sm-12">
+            <h1>Select friends for chat "{{context.chat.name}}"</h1>
+        </div>
+    </div>
+    <div class="row" [ngClass]="{'myclass' : shouldUseMyClass}">
+        <div class="col-xs-12">
+            <div class="dialoge">
+                <div class="form-group">
+                    <div class="checkbox" *ngFor="let friend of friends">
+                        <label><input type="checkbox" (change)="onChange(friend, $event.target.checked)" >{{friend.email}}</label>
+                    </div>
+                </div>
+                <button class="btn btn-default" (click)="sendChatRequest()">Send requests</button>
+            </div>
+            <button class="btn btn-success" (click)="closeModal()">Close</button>
+        </div>
+    </div>
+</div>

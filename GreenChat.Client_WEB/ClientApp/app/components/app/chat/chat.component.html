@@ -1,0 +1,9 @@
+<div class="dialoges">
+    <div class="dialoge" id="listTabs">
+        <friends-chats-list (ownerActivated)="ownerActivated($event)" (tabActivated)="tabActivated($event)"></friends-chats-list>
+    </div>
+    <div class="mess-field">
+        <messages-field class="chatList" (scrolledToTop)="getOldMessages($event)"></messages-field>
+        <message-input  (messageSent)="scrollMessageField()"></message-input>
+    </div>
+</div>

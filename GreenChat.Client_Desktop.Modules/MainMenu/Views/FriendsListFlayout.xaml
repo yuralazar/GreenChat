@@ -1,0 +1,51 @@
+﻿<metro:Flyout x:Class="GreenChat.Client_Desktop.Modules.MainMenu.Views.FriendsListFlayout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GreenChat.Client_Desktop.Modules.MainMenu.Views"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:interactivity="http://prismlibrary.com/"
+             xmlns:vm="clr-namespace:GreenChat.Client_Desktop.Modules.MainMenu.ViewModels"
+             xmlns:v ="clr-namespace:GreenChat.Client_Desktop.Modules.MainMenu.Views"
+             interactivity:ViewModelLocator.AutoWireViewModel="True"
+             Header="Friends List Flayout"
+             Position="Left"
+             Theme="Dark"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+    <Grid x:Name="FriendsListLayout" Background="White" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="425"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0">
+            <Button Height="35" Width="140" Command="{Binding SearchFriendAsyncCommand}" Style="{StaticResource SearchFriendButton}">
+                
+            </Button>
+        </Border>
+        <Border Grid.Row="1">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListView ItemsSource="{Binding FriendsMess}"
+                          SelectionMode="Single"
+                          SelectedItem="{Binding SelectedFriendMess}">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <interactivity:InvokeCommandAction Command="{Binding FriendMessSelectedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:FriendsListItemControl/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ListView>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</metro:Flyout>

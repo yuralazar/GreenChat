@@ -1,0 +1,65 @@
+﻿<metro:MetroWindow x:Class="GreenChat.Client_Desktop.Views.MainWindow"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:infConstants="clr-namespace:PrismMahAppsSample.Infrastructure.Constants;assembly=PrismMahAppsSample.Infrastructure"
+                   xmlns:infBehaviors="clr-namespace:PrismMahAppsSample.Infrastructure.Behaviors;assembly=PrismMahAppsSample.Infrastructure"
+                   infBehaviors:RegionPopupBehaviors.CreatePopupRegionWithName="{x:Static infConstants:RegionNames.DialogPopupRegion}"
+                   infBehaviors:RegionPopupBehaviors.ContainerWindowStyle="{StaticResource PopupRegionWindowStyle}"
+                   xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+                   xmlns:prism="http://www.codeplex.com/prism"
+                   xmlns:inf="clr-namespace:PrismMahAppsSample.Infrastructure;assembly=PrismMahAppsSample.Infrastructure"
+                   prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}" Height="600" Width="900" ShowTitleBar="True" ShowIconOnTitleBar="True" ShowMinButton="True" ShowMaxRestoreButton="True" ShowCloseButton="True" ResizeMode="CanResizeWithGrip">
+    <!-- LeftWindow Commands -->
+    <metro:MetroWindow.LeftWindowCommands>
+        <metro:WindowCommands x:Name="leftWindowCommandsRegion" />
+    </metro:MetroWindow.LeftWindowCommands>
+
+    <!-- RightWindow Commands -->
+    <metro:MetroWindow.RightWindowCommands>
+        <metro:WindowCommands x:Name="rightWindowCommandsRegion" />
+    </metro:MetroWindow.RightWindowCommands>
+
+    <!-- Flyouts -->
+    <metro:MetroWindow.Flyouts>
+        <metro:FlyoutsControl x:Name="flyoutsControlRegion" />
+    </metro:MetroWindow.Flyouts>
+
+    <Grid Background="{StaticResource BackgroundGreenBrush}">
+
+    
+        <!-- Main-Region -->
+        <ContentControl prism:RegionManager.RegionName="{x:Static infConstants:RegionNames.MainRegion}"/>
+
+        <Grid Name="MessagesBar" Margin="300 0 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0">
+                <ContentControl prism:RegionManager.RegionName="{x:Static infConstants:RegionNames.TopBarRegion}"/>
+            </Border>
+            <Border Grid.Row="1">
+                <ContentControl prism:RegionManager.RegionName="{x:Static infConstants:RegionNames.CurrentMessangerRegion}"/>
+            </Border>
+            <Border Grid.Row="2">
+                <ContentControl prism:RegionManager.RegionName="{x:Static infConstants:RegionNames.MessagesFlowRegion}"/>
+            </Border>
+            <Border Grid.Row="3">
+                <ContentControl prism:RegionManager.RegionName="{x:Static infConstants:RegionNames.MessagesSenderRegion}"/>
+            </Border>
+        </Grid>
+    </Grid>
+
+</metro:MetroWindow>
+
+
+
+
+
+
+

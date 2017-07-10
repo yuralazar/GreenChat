@@ -1,0 +1,29 @@
+﻿<busy *ngIf="showBusy"></busy>
+<my-tabs (selected)="tabSelected($event)">
+    <my-tab tabTitle="Friends" tabId="0" [menuItems]="friendsMenuItems">
+        <ul class="green-list" id="friendsList">
+            <li *ngFor="let friend of friends">
+                <div [ngClass]="{ 'green-friend' : true, online : friendIsOnline(friend), active : friendIsActive(friend)}" (click)="activateFriend(friend)">
+                    <div class="owner-content">
+                        <avatar [email]="friend.email" [displayType]="'circle'" [size]="50"></avatar>
+                        <div class="owner-name">{{friend.email}}</div>
+                        <div class="owner-count anim" *ngIf="countNewPrivate(friend)>0">{{countNewPrivate(friend)}}</div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </my-tab>
+    <my-tab tabTitle="Chats" tabId="1" [menuItems]="chatsMenuItems">
+        <ul class="green-list" id="chatList">
+            <li *ngFor="let chat of chats">
+                <div [ngClass]="{ 'green-friend' : true, active : chatIsActive(chat)}" (click)="activateChat(chat)">
+                    <div class="owner-content">
+                        <avatar [email]="chat.name" [displayType]="'circle'" [size]="50"></avatar>
+                        <div class="owner-name">{{chat.name}}</div>
+                        <div class="owner-count anim" *ngIf="countNewChat(chat)>0">{{countNewChat(chat)}}</div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </my-tab>
+</my-tabs>

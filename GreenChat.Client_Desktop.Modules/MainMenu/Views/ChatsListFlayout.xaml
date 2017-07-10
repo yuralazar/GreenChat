@@ -1,0 +1,70 @@
+﻿<metro:Flyout x:Class="GreenChat.Client_Desktop.Modules.MainMenu.Views.ChatsListFlayout"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:local="clr-namespace:GreenChat.Client_Desktop.Modules.MainMenu.Views"
+              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+              xmlns:interactivity="http://prismlibrary.com/"
+              xmlns:vm="clr-namespace:GreenChat.Client_Desktop.Modules.MainMenu.ViewModels"
+              xmlns:v ="clr-namespace:GreenChat.Client_Desktop.Modules.MainMenu.Views"
+              interactivity:ViewModelLocator.AutoWireViewModel="True"
+              Header="Chats List Flayout"
+              Position="Left"
+              Theme="Accent"
+              mc:Ignorable="d" 
+              d:DesignHeight="600" d:DesignWidth="300">
+    <Grid x:Name="ChatsListLayout" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="425"/>
+        </Grid.RowDefinitions>
+        <Border Background="LightGreen" Grid.Row="0">
+            <Button Command="{Binding CreateChatAsyncCommand}" Height="35" Width="140" Style="{StaticResource OvalButton}">
+                <!--<StackPanel Orientation="Horizontal">
+                    <Rectangle Width="30" Height="30"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" RenderTransformOrigin="0.571,0.494">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_star_add}"/>
+                            --><!--appbar_layer_add appbar_group_add appbar_star_add appbar_user_add-->
+                            <!--Visual="{StaticResource appbar_settings}" appbar_vector_pen_add--><!--
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="4 0 0 0"
+                               VerticalAlignment="Center"
+                               Text="Create Chat" />
+                </StackPanel>-->
+            </Button>
+        </Border>
+        <Border Background="LightGreen"  Grid.Row="1">
+            <Button  Height="35" Width="140" Style="{StaticResource InvitetoChatButton}" Command="{Binding InviteFriensToChatCommand}">
+               
+            </Button>
+        </Border>
+        <Border Grid.Row="2">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListBox  ItemsSource="{Binding _ChatsMess}"
+                          SelectionMode="Single"
+                          SelectedItem="{Binding SelectedChatMess}">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <interactivity:InvokeCommandAction Command="{Binding ChatMessSelectedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:ChatListItemUserControl/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ListBox>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</metro:Flyout>
+

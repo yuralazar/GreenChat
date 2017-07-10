@@ -1,0 +1,13 @@
+﻿<div class="dropdown" style="display: block;">
+    <button class="btn btn-success btn-big" (click)="showDropDown=!showDropDown">
+        Menu
+        <span class="caret"></span>
+    </button>
+    <div [hidden]="!showDropDown">
+        <ul class="green-menu">
+            <li *ngFor="let item of menuItems" (click)="openModal(item)">
+                {{item.name}}
+            </li>
+        </ul>
+    </div>
+</div>
