@@ -2,11 +2,17 @@
     <div class="green-date">
         {{message.content.date | datex :'HH:mm'}}
     </div>
-    <!-- <div class="green-message-text">-->
-    <div [ngClass]="{'from-them':message.incoming, 'from-me':!message.incoming}">
+    <div [ngClass]="{'from-them':message.incoming,
+                     'from-me':!message.incoming,
+                     'anim' : message.incoming && message.isNew
+                     }"
+        (mouseover)="unmarkMessage(message)">
         <span class="green-user-text" *ngIf="isChatMessage(message) && message.incoming">
             {{message.userFrom.email}}
         </span>
         {{message.content.text}}
+    </div>
+    <div *ngIf="showStatus(message)">
+        {{message.getStatusText()}}
     </div>
 </li>

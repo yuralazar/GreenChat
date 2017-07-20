@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 
-namespace CreenChat.WebAPI.WebSocketManagement
+namespace GreenChat.WebAPI.WebSocketManagement
 {
     public class WebSocketManagerMiddleware
     {

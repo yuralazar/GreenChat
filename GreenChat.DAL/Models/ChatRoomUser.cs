@@ -17,7 +17,5 @@ namespace GreenChat.DAL.Models
         public ChatRoom ChatRoom { get; set; }
 
         public virtual ICollection<ChatMessage> NavChatMessages { get; set; }
-        public virtual ICollection<UnreadChatMessage> NavUnreadChatMessages1 { get; set; }
-        public virtual ICollection<UnreadChatMessage> NavUnreadChatMessages2 { get; set; }
     }
 }

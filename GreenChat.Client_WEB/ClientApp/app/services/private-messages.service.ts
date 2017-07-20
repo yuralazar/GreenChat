@@ -5,11 +5,14 @@ import {PrivateMessagesContainer} from "../models/PrivateMessagesContainer";
 import {MessagesService} from "./message-service";
 import {WsMessageService} from "./wsMessage.service";
 import {MessageContent} from "../models/MessageContent";
+import {MessageStatus} from "../models/MessageState";
+import {ChatGlobalsService} from "./chat-globals.service";
 
 @Injectable()
 export class PrivateMessagesService extends MessagesService{
 
-    constructor(private wsMessageService : WsMessageService) {
+    constructor(private wsMessageService : WsMessageService
+                ,private chatGlobals : ChatGlobalsService) {
         super();
     }
 
@@ -20,10 +23,9 @@ export class PrivateMessagesService extends MessagesService{
         return container;
     }
 
-    createMessage(userFrom : User, userTo : User,
-                  message : any,
-                  isNew: boolean, incoming: boolean) : PrivateMessage {
-        let mess = new PrivateMessage(userFrom, userTo, message, isNew, incoming);
+    createMessage(userFrom : User, userTo : User, message : any
+                , isNew: boolean, incoming: boolean, status : MessageStatus = null) : PrivateMessage {
+        let mess = new PrivateMessage(userFrom, userTo, message, isNew, incoming, status);
         this.addMessage(incoming ? userFrom : userTo, mess);
         return message;
     }
@@ -31,7 +33,7 @@ export class PrivateMessagesService extends MessagesService{
     loadMessages(userFrom: any|User, messages : any[], historyLoaded:boolean = false) {
         messages.forEach(mess => {
             this.createMessage(mess.userFrom, mess.userTo, mess.message,
-                    false, mess.userFrom.id === userFrom.id)
+                    false, mess.userFrom.id === userFrom.id, mess.status)
         })
         let container = this.getContainerByOwner(userFrom);
         container.historyLoaded = historyLoaded;
@@ -41,7 +43,8 @@ export class PrivateMessagesService extends MessagesService{
         this.wsMessageService.getPrivateMessages(user, count, startDate);
     }
 
-    deleteUnreadMessages(currentFriend: User) {
-        this.wsMessageService.deletePrivateMessages(currentFriend);
+    changeMessageIsNew(message: PrivateMessage) {
+        message.isNew = false;
+        this.wsMessageService.privateMessageStatus(this.chatGlobals.currentFriend, message.content.id, MessageStatus.Seen);
     }
 }

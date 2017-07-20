@@ -1,4 +1,4 @@
-﻿namespace CreenChat.WebAPI.Models.ManageModels
+﻿namespace GreenChat.WebAPI.Models.ManageModels
 {
     public class Factor
     {

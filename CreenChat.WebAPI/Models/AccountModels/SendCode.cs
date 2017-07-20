@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace CreenChat.WebAPI.Models.AccountModels
+namespace GreenChat.WebAPI.Models.AccountModels
 {
     public class SendCode
     {

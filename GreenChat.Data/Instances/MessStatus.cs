@@ -2,7 +2,7 @@ namespace GreenChat.Data.Instances
 {
     public enum MessStatus
     {
-        Sent,
+        Sent = 0,
         Delivered,
         Seen
     }

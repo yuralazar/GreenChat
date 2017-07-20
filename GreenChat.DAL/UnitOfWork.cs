@@ -39,9 +39,7 @@ namespace GreenChat.DAL
             ChatMessages = chatMessageRepository;
             ChatRooms = chatRoomRepository;
             ChatRoomUsers = chatRoomUsersRepository;
-            PrivateMessages = privateMessageRepository;
-            UnreadChatMessages = unreadChatMessages;
-            UnreadPrivateMessages = unreadPrivateMessages;
+            PrivateMessages = privateMessageRepository;            
             PrivateMessageStatuses = privateMessageStatuses;
             ChatMessageStatuses = chatMessageStatuses;
         }   

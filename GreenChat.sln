@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenChat.DAL", "GreenChat.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenChat.BLL", "GreenChat.BLL\GreenChat.BLL.csproj", "{93E3158C-F6E9-411F-9A25-F9018A362704}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreenChat.WebAPI", "CreenChat.WebAPI\CreenChat.WebAPI.csproj", "{6FFCC747-94CD-4875-A43E-E1F78BF90ECE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenChat.WebAPI", "CreenChat.WebAPI\GreenChat.WebAPI.csproj", "{6FFCC747-94CD-4875-A43E-E1F78BF90ECE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenChat.Data", "GreenChat.Data\GreenChat.Data.csproj", "{03865F5C-82B4-48A0-A1F9-13A3563913A2}"
 EndProject
@@ -34,6 +34,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrismMahAppsSample.Infrastructure", "Infrastructure\PrismMahAppsSample.Infrastructure\PrismMahAppsSample.Infrastructure.csproj", "{DE912131-546F-40A9-9C3F-7016957EA613}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrismMahAppsSample.Styling", "Infrastructure\PrismMahAppsSample.Styling\PrismMahAppsSample.Styling.csproj", "{A9984F2E-D289-45F0-AFF4-693D77F3CDE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F22AF283-3355-4327-838B-2BBE970B16A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -336,6 +338,30 @@ Global
 		{A9984F2E-D289-45F0-AFF4-693D77F3CDE4}.Release|iPhone.Build.0 = Release|Any CPU
 		{A9984F2E-D289-45F0-AFF4-693D77F3CDE4}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{A9984F2E-D289-45F0-AFF4-693D77F3CDE4}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Ad-Hoc|Any CPU.ActiveCfg = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Ad-Hoc|Any CPU.Build.0 = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Ad-Hoc|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.AppStore|Any CPU.ActiveCfg = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.AppStore|Any CPU.Build.0 = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.AppStore|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.AppStore|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Release|iPhone.Build.0 = Release|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{F22AF283-3355-4327-838B-2BBE970B16A6}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

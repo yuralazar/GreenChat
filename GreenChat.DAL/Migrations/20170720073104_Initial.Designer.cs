@@ -9,13 +9,13 @@ using GreenChat.Data.Instances;
 namespace GreenChat.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170710125855_Initial")]
+    [Migration("20170720073104_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.1")
+                .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("GreenChat.DAL.Models.ApplicationUser", b =>
@@ -105,9 +105,13 @@ namespace GreenChat.DAL.Migrations
 
                     b.Property<int>("Status");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ChatMessageId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ChatMessageStatuses");
                 });
@@ -202,63 +206,15 @@ namespace GreenChat.DAL.Migrations
 
                     b.Property<int>("Status");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PrivateMessageId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("PrivateMessageStatuses");
-                });
-
-            modelBuilder.Entity("GreenChat.DAL.Models.UnreadChatMessage", b =>
-                {
-                    b.Property<int>("UnreadChatMessageID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ChatMessageID");
-
-                    b.Property<int>("ChatRoomID");
-
-                    b.Property<int>("ChatRoomUserFromID");
-
-                    b.Property<int>("ChatRoomUserToID");
-
-                    b.Property<string>("Content");
-
-                    b.Property<DateTimeOffset>("Date");
-
-                    b.HasKey("UnreadChatMessageID");
-
-                    b.HasIndex("ChatRoomID");
-
-                    b.HasIndex("ChatRoomUserFromID");
-
-                    b.HasIndex("ChatRoomUserToID");
-
-                    b.ToTable("UnreadChatMessages");
-                });
-
-            modelBuilder.Entity("GreenChat.DAL.Models.UnreadPrivateMessage", b =>
-                {
-                    b.Property<int>("UnreadPrivateMessageID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Content");
-
-                    b.Property<DateTimeOffset>("Date");
-
-                    b.Property<int>("PrivateMessageID");
-
-                    b.Property<string>("ReceiverID");
-
-                    b.Property<string>("SenderID");
-
-                    b.HasKey("UnreadPrivateMessageID");
-
-                    b.HasIndex("ReceiverID");
-
-                    b.HasIndex("SenderID");
-
-                    b.ToTable("UnreadPrivateMessages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -385,6 +341,10 @@ namespace GreenChat.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("ChatMessageId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("GreenChat.DAL.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("GreenChat.DAL.Models.ChatRoom", b =>
@@ -433,32 +393,10 @@ namespace GreenChat.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("PrivateMessageId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
 
-            modelBuilder.Entity("GreenChat.DAL.Models.UnreadChatMessage", b =>
-                {
-                    b.HasOne("GreenChat.DAL.Models.ChatRoom", "ChatRoom")
-                        .WithMany("NavUnreadChatMessages")
-                        .HasForeignKey("ChatRoomID");
-
-                    b.HasOne("GreenChat.DAL.Models.ChatRoomUser", "ChatRoomUserFrom")
-                        .WithMany("NavUnreadChatMessages1")
-                        .HasForeignKey("ChatRoomUserFromID");
-
-                    b.HasOne("GreenChat.DAL.Models.ChatRoomUser", "ChatRoomUserTo")
-                        .WithMany("NavUnreadChatMessages2")
-                        .HasForeignKey("ChatRoomUserToID");
-                });
-
-            modelBuilder.Entity("GreenChat.DAL.Models.UnreadPrivateMessage", b =>
-                {
-                    b.HasOne("GreenChat.DAL.Models.ApplicationUser", "Receiver")
-                        .WithMany("UnreadReceivers")
-                        .HasForeignKey("ReceiverID");
-
-                    b.HasOne("GreenChat.DAL.Models.ApplicationUser", "Sender")
-                        .WithMany("UnreadSenders")
-                        .HasForeignKey("SenderID");
+                    b.HasOne("GreenChat.DAL.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

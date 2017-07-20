@@ -48,10 +48,6 @@ export class MessagesFieldComponent implements AfterViewChecked{
                                                             , !this.chatGlobals.isCurrentChat(chat), true);
     }
 
-    private addMessage(mess: Message) {
-        this.messages.push(mess);
-    }
-
     refillMessages() {
         this.messages = [];
 

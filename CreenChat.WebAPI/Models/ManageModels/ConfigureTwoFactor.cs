@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace CreenChat.WebAPI.Models.ManageModels
+namespace GreenChat.WebAPI.Models.ManageModels
 {
     public class ConfigureTwoFactor
     {

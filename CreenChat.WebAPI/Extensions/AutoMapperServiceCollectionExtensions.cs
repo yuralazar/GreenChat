@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using CreenChat.WebAPI.Models;
 using GreenChat.BLL.DTO;
+using GreenChat.WebAPI.Models;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CreenChat.WebAPI.Extensions
+namespace GreenChat.WebAPI.Extensions
 {
     public static class AutoMapperServiceCollectionExtensions
     {

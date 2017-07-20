@@ -3,6 +3,8 @@ import {ChatGlobalsService} from "../../../../services/chat-globals.service";
 import {WsMessageService} from "../../../../services/wsMessage.service";
 import {PrivateMessagesService} from "../../../../services/private-messages.service";
 import {ChatMessagesService} from "../../../../services/chat-messages.service";
+import {MessageStatus} from "../../../../models/MessageState";
+import {Message} from "../../../../models/Message";
 
 @Component({
     selector: 'message-input',
@@ -27,15 +29,18 @@ export class MessageInputComponent {
 
         let mess = {
             id : -1,
+            idNew : Message.getId(),
             text : this.messageInput,
             date : new Date
         };
-        this.wsMessageService.sendMessage(mess);
+        this.wsMessageService.sendMessage(mess, mess.idNew);
 
         if (this.chatGlobals.privateMode())
-            this.privateMessagesService.createMessage(this.chatGlobals.currentUser, this.chatGlobals.currentFriend, mess, false, false);
+            this.privateMessagesService.createMessage(this.chatGlobals.currentUser, this.chatGlobals.currentFriend
+                                                    , mess, false, false, MessageStatus.Sent);
         else
-            this.chatMessagesService.createMessage(this.chatGlobals.currentChat, this.chatGlobals.currentUser, mess, false, false);
+            this.chatMessagesService.createMessage(this.chatGlobals.currentChat, this.chatGlobals.currentUser
+                                                    , mess, false, false, MessageStatus.Sent);
 
         this.messageInput = "";
         this.messageSent.emit();

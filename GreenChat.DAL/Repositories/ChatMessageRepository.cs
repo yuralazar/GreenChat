@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using GreenChat.Data.Instances;
 using GreenChat.DAL.Data;
 using GreenChat.DAL.Interfaces;
 using GreenChat.DAL.Models;
@@ -47,6 +48,40 @@ namespace GreenChat.DAL.Repositories
                 .ToListAsync();
 
             return list.OrderBy(message => message.Date).ToList();
-        }       
+        }
+
+        public async Task<List<ChatMessage>> GetNotSeen(string userId)
+        {
+            var list =
+                from statuses in
+                (from statuses1 in
+                     Context.ChatMessageStatuses
+                 where statuses1.UserId == userId
+                 join lastStatuses in
+                 (from statuses0 in Context.ChatMessageStatuses
+                  where statuses0.UserId == userId
+                  group statuses0 by statuses0.ChatMessageId
+                     into statusesGroup
+                  select new
+                  {
+                      ChatMessageId = statusesGroup.Key,
+                      Date = (from stat in statusesGroup
+                              select stat.Date).Max()
+                  }
+                 )
+                 on new { statuses1.ChatMessageId, statuses1.Date } equals
+                 new { lastStatuses.ChatMessageId, lastStatuses.Date }
+                 select new { statuses1.Status, statuses1.ChatMessageId })
+                where statuses.Status != MessStatus.Seen
+                select statuses.ChatMessageId;
+
+
+            return await Context.ChatMessages
+                .Where(message => list.Contains(message.ChatMessageID))
+                .Include(message => message.ChatRoom)
+                .Include(message => message.ChatRoomUser)
+                .ThenInclude(chatUser => chatUser.User)
+                .ToListAsync();
+        }
     }
 }

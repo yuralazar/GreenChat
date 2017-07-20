@@ -1,6 +1,7 @@
 ﻿import { User } from "./User";
 import { Chat } from "./Chat";
 import {MessageContent} from "./MessageContent";
+import {MessageStatus} from "./MessageState";
 
 export abstract class Message {
 
@@ -8,13 +9,24 @@ export abstract class Message {
     userFrom: User;
     incoming: boolean;
     content : MessageContent;
+    status : MessageStatus;
+    idNew : number;
 
-    constructor(userFrom: User, message : any, isNew :boolean, incoming: boolean){
+    private static newId : number = 0;
+    static getId() : number{
+        return this.newId++;
+    }
+
+    constructor(userFrom: User, message : any, isNew :boolean, incoming: boolean, status : MessageStatus = null){
         this.isNew = isNew;
         this.userFrom = userFrom;
         this.content = MessageContent.create(message);
         this.incoming = incoming;
+        this.status = status;
+        this.idNew = message.idNew;
     }
+
+    abstract getStatusText() : string;
 
     getTextWithDate() : string {
         return this.content.date.toLocaleTimeString() + " : ";
@@ -26,11 +38,20 @@ export abstract class Message {
 }
 
 export class PrivateMessage extends Message {
-    userTo : User
 
-    constructor(userFrom: User, userTo: any, message : any, isNew: boolean, incoming: boolean) {
-        super(userFrom, message, isNew, incoming);
+    userTo : User;
+
+    constructor(userFrom: User, userTo: any, message : any
+        , isNew: boolean, incoming: boolean, status : MessageStatus = null) {
+        super(userFrom, message, isNew, incoming, status);
         this.userTo = userTo;
+    }
+
+    getStatusText() : string {
+        switch (this.status){
+            case (MessageStatus.Delivered) : return "Delivered";
+            case (MessageStatus.Sent) : return "Sent";
+        }
     }
 
     getTextWithDate(): string {
@@ -43,11 +64,17 @@ export class PrivateMessage extends Message {
 }
 
 export class ChatMessage extends Message {
+
     chat : Chat;
 
-    constructor(chat: Chat, userFrom: User, message : any, isNew: boolean, incoming: boolean) {
-        super(userFrom, message, isNew, incoming);
+    constructor(chat: Chat, userFrom: User, message : any
+            , isNew: boolean, incoming: boolean, status : MessageStatus = null) {
+        super(userFrom, message, isNew, incoming, status);
         this.chat = chat;
+    }
+
+    getStatusText(): string {
+        return "";
     }
 
     getText() : string{

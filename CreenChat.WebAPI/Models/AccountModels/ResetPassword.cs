@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CreenChat.WebAPI.Models.AccountModels
+namespace GreenChat.WebAPI.Models.AccountModels
 {
     public class ResetPassword
     {

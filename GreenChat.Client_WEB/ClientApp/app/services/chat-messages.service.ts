@@ -7,6 +7,7 @@ import {FriendsService} from "./friends.service";
 import {User} from "../models/User";
 import {ChatGlobalsService} from "./chat-globals.service";
 import {WsMessageService} from "./wsMessage.service";
+import {MessageStatus} from "../models/MessageState";
 
 @Injectable()
 export class ChatMessagesService extends MessagesService{
@@ -23,8 +24,8 @@ export class ChatMessagesService extends MessagesService{
     }
 
     createMessage(chat : Chat, userFrom : User, message : any,
-                  isNew: boolean, incoming: boolean) : ChatMessage {
-        let mess = new ChatMessage(chat, userFrom, message, isNew, incoming);
+                  isNew: boolean, incoming: boolean, status : MessageStatus = null) : ChatMessage {
+        let mess = new ChatMessage(chat, userFrom, message, isNew, incoming, status);
         this.addMessage(chat, mess);
         return message;
     }
@@ -43,7 +44,8 @@ export class ChatMessagesService extends MessagesService{
         this.wsMessageService.getChatMessages(chat, count, startDate);
     }
 
-    deleteUnreadMessages(chat: Chat) {
-        this.wsMessageService.deleteChatMessages(chat);
+    changeMessageIsNew(message: ChatMessage) {
+        message.isNew = false;
+        this.wsMessageService.chatMessageStatus(this.chatGlobals.currentChat, message.content.id, MessageStatus.Seen);
     }
 }

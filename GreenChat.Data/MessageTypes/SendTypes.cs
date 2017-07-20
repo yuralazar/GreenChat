@@ -50,7 +50,9 @@ namespace GreenChat.Data.MessageTypes
         InitialInfo,                                    // 10         
         PrivateMessages,                                // 11
         ChatMessages,                                   // 12
-        LeftChat                                        // 13
+        LeftChat,                                       // 13        
+        PrivateMessageStatus,                           // 14
+        ChatMessageStatus                               // 15
     }
 
     public struct SendMethodAndType

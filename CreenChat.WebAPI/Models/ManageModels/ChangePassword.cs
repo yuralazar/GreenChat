@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CreenChat.WebAPI.Models.ManageModels
+namespace GreenChat.WebAPI.Models.ManageModels
 {
     public class ChangePassword
     {

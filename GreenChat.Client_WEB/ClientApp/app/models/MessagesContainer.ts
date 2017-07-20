@@ -30,7 +30,11 @@ export abstract class MessagesContainer {
         return this.messages.filter(mess => mess.isNew).length;
     }
 
-    unmarkNew() {
-        this.messages.forEach(m => {if(m.isNew) m.isNew = false});
+    getMessageById(messageId: number) {
+        return this.messages.find(mess => mess.content.id == messageId);
+    }
+
+    getMessageByIdNew(idNew : number) : Message{
+        return this.messages.find(mess => mess.idNew == idNew)
     }
 }

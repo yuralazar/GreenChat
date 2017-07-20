@@ -4,8 +4,10 @@ using System.Linq;
 using GreenChat.Data.Formats;
 using GreenChat.Data.Instances;
 using GreenChat.Data.MessageTypes;
+using GreenChat.Data.MessageTypes.RecieveArgs;
 using GreenChat.Data.MessageTypes.SendArgs;
 using GreenChat.DAL.Models;
+using GreenChat.DAL.Repositories;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -30,8 +32,8 @@ namespace GreenChat.BLL.WebSockets
                                     ,List<ApplicationUser> potentialFriends
                                     ,List<ChatRoom> chatRooms
                                     ,List<ChatRoomUser> chatRoomsUsers
-                                    ,List<UnreadPrivateMessage> unreadPrivateMessages
-                                    ,List<UnreadChatMessage> unreadChatMessages                                            
+                                    ,List<PrivateMessage> unreadPrivateMessages
+                                    ,List<ChatMessage> unreadChatMessages                                            
                                     ,List<ChatRoom> potentialChats)
         {
             var friendsList = friends
@@ -55,7 +57,7 @@ namespace GreenChat.BLL.WebSockets
                         ),
                     ChatMessages = unreadChatMessages.Select(mess => new SendChatArguments
                         {
-                            UserFrom = CreateUserInfo(mess.ChatRoomUserFrom.User),
+                            UserFrom = CreateUserInfo(mess.ChatRoomUser.User),
                             Chat = CreateChatInfo(mess.ChatRoom),
                             Message = CreateMessageInfo(mess.ChatMessageID, mess.Date, mess.Content)
                         }),                        
@@ -105,24 +107,27 @@ namespace GreenChat.BLL.WebSockets
             return CreateSendFormat(SendActionTypes.ConnectionStatus, CreateUserInfo(user));                
         }
 
-        public SendFormat PrivateMessage(UserInfo user, MessageInfo message)
+        public SendFormat PrivateMessage(UserInfo userfrom, UserInfo userTo, MessageInfo message, int idNew)
         {
             return CreateSendFormat(SendActionTypes.PrivateMessage,
                 new SendPrivateArguments
                 {
-                    UserFrom = user,
-                    Message = message
+                    UserFrom = userfrom,
+                    UserTo= userTo,
+                    Message = message,
+                    IdNew = idNew
                 });
         }
 
-        public SendFormat ChatMessage(ChatInfo chatInfo, UserInfo user, MessageInfo message)
+        public SendFormat ChatMessage(ChatInfo chatInfo, UserInfo user, MessageInfo message, int idNew)
         {
             return CreateSendFormat(SendActionTypes.ChatMessage,
                 new SendChatArguments
                 {
                     UserFrom = user,
                     Message = message,
-                    Chat = chatInfo
+                    Chat = chatInfo,
+                    IdNew = idNew
                 });
         }
 
@@ -187,18 +192,23 @@ namespace GreenChat.BLL.WebSockets
                 });
         }
 
-        public SendFormat PrivateMessages(ApplicationUser userFrom, List<PrivateMessage> messages)
+        public SendFormat PrivateMessages(ApplicationUser userFrom, List<PrivateMessageInfo> messages)
         {
             return CreateSendFormat(SendActionTypes.PrivateMessages,
                 new PrivateMessagesArguments
                 {
                     UserFrom = CreateUserInfo(userFrom),
-                    Messages = messages.Select(mess => new SendPrivateArguments
-                    {
-                        UserFrom = CreateUserInfo(mess.Sender),
-                        UserTo = CreateUserInfo(mess.Receiver),
-                        Message = CreateMessageInfo(mess.PrivateMessageID, mess.Date, mess.Content)
-                    }
+                    Messages = messages.Select(message =>
+                        {
+                            var mess = message.Message;
+                            return new SendPrivateArguments
+                            {
+                                UserFrom = CreateUserInfo(mess.Sender),
+                                UserTo = CreateUserInfo(mess.Receiver),
+                                Message = CreateMessageInfo(mess.PrivateMessageID, mess.Date, mess.Content),
+                                Status = message.Status
+                            };
+                        }
                     )
                 });
         }
@@ -218,6 +228,16 @@ namespace GreenChat.BLL.WebSockets
                     }
                     )
                 });
+        }
+
+        public SendFormat PrivateMessageStatus(PrivateStatusArguments arguments)
+        {
+            return CreateSendFormat(SendActionTypes.PrivateMessageStatus, arguments);
+        }
+
+        public SendFormat ChatMessageStatus(ChatStatusArguments arguments)
+        {
+            return CreateSendFormat(SendActionTypes.ChatMessageStatus, arguments);
         }
 
         private SendFormat CreateSendFormat(SendActionTypes actionType, object obj)

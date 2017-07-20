@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CreenChat.WebAPI.Extensions;
-using CreenChat.WebAPI.Services;
-using CreenChat.WebAPI.WebSocketManagement;
 using GreenChat.BLL;
 using GreenChat.BLL.Extensions;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using GreenChat.WebAPI.Extensions;
+using GreenChat.WebAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace CreenChat.WebAPI
+namespace GreenChat.WebAPI
 {
     public class Startup
     {

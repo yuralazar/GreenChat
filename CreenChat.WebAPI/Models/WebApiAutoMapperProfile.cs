@@ -1,8 +1,8 @@
 using AutoMapper;
-using CreenChat.WebAPI.Models.AccountModels;
 using GreenChat.BLL.DTO;
+using GreenChat.WebAPI.Models.AccountModels;
 
-namespace CreenChat.WebAPI.Models
+namespace GreenChat.WebAPI.Models
 {
     public class WebApiAutoMapperProfile : Profile
     {

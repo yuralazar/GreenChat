@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CreenChat.WebAPI.Controllers
+namespace GreenChat.WebAPI.Controllers
 {
     public static class ResponseHelper
     {

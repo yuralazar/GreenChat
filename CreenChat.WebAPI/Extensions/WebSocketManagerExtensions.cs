@@ -1,10 +1,10 @@
-using CreenChat.WebAPI.WebSocketManagement;
 using GreenChat.BLL.WebSockets;
+using GreenChat.WebAPI.WebSocketManagement;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CreenChat.WebAPI.Extensions
+namespace GreenChat.WebAPI.Extensions
 {    
     public static class WebSocketManagerExtensions
     {

@@ -140,35 +140,6 @@ namespace GreenChat.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UnreadPrivateMessages",
-                columns: table => new
-                {
-                    UnreadPrivateMessageID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Content = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTimeOffset>(nullable: false),
-                    PrivateMessageID = table.Column<int>(nullable: false),
-                    ReceiverID = table.Column<string>(nullable: true),
-                    SenderID = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UnreadPrivateMessages", x => x.UnreadPrivateMessageID);
-                    table.ForeignKey(
-                        name: "FK_UnreadPrivateMessages_AspNetUsers_ReceiverID",
-                        column: x => x.ReceiverID,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UnreadPrivateMessages_AspNetUsers_SenderID",
-                        column: x => x.SenderID,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -290,7 +261,8 @@ namespace GreenChat.DAL.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(nullable: false),
                     PrivateMessageId = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false)
+                    Status = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -301,6 +273,12 @@ namespace GreenChat.DAL.Migrations
                         principalTable: "PrivateMessages",
                         principalColumn: "PrivateMessageID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PrivateMessageStatuses_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -332,42 +310,6 @@ namespace GreenChat.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UnreadChatMessages",
-                columns: table => new
-                {
-                    UnreadChatMessageID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ChatMessageID = table.Column<int>(nullable: false),
-                    ChatRoomID = table.Column<int>(nullable: false),
-                    ChatRoomUserFromID = table.Column<int>(nullable: false),
-                    ChatRoomUserToID = table.Column<int>(nullable: false),
-                    Content = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTimeOffset>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UnreadChatMessages", x => x.UnreadChatMessageID);
-                    table.ForeignKey(
-                        name: "FK_UnreadChatMessages_ChatRooms_ChatRoomID",
-                        column: x => x.ChatRoomID,
-                        principalTable: "ChatRooms",
-                        principalColumn: "ChatRoomID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UnreadChatMessages_ChatRoomUsers_ChatRoomUserFromID",
-                        column: x => x.ChatRoomUserFromID,
-                        principalTable: "ChatRoomUsers",
-                        principalColumn: "ChatRoomUserID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UnreadChatMessages_ChatRoomUsers_ChatRoomUserToID",
-                        column: x => x.ChatRoomUserToID,
-                        principalTable: "ChatRoomUsers",
-                        principalColumn: "ChatRoomUserID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ChatMessageStatuses",
                 columns: table => new
                 {
@@ -375,7 +317,8 @@ namespace GreenChat.DAL.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ChatMessageId = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    Status = table.Column<int>(nullable: false)
+                    Status = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -386,6 +329,12 @@ namespace GreenChat.DAL.Migrations
                         principalTable: "ChatMessages",
                         principalColumn: "ChatMessageID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChatMessageStatuses_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -413,6 +362,11 @@ namespace GreenChat.DAL.Migrations
                 name: "IX_ChatMessageStatuses_ChatMessageId",
                 table: "ChatMessageStatuses",
                 column: "ChatMessageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChatMessageStatuses_UserId",
+                table: "ChatMessageStatuses",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChatRooms_UserID",
@@ -445,29 +399,9 @@ namespace GreenChat.DAL.Migrations
                 column: "PrivateMessageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UnreadChatMessages_ChatRoomID",
-                table: "UnreadChatMessages",
-                column: "ChatRoomID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UnreadChatMessages_ChatRoomUserFromID",
-                table: "UnreadChatMessages",
-                column: "ChatRoomUserFromID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UnreadChatMessages_ChatRoomUserToID",
-                table: "UnreadChatMessages",
-                column: "ChatRoomUserToID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UnreadPrivateMessages_ReceiverID",
-                table: "UnreadPrivateMessages",
-                column: "ReceiverID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UnreadPrivateMessages_SenderID",
-                table: "UnreadPrivateMessages",
-                column: "SenderID");
+                name: "IX_PrivateMessageStatuses_UserId",
+                table: "PrivateMessageStatuses",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
@@ -506,12 +440,6 @@ namespace GreenChat.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "PrivateMessageStatuses");
-
-            migrationBuilder.DropTable(
-                name: "UnreadChatMessages");
-
-            migrationBuilder.DropTable(
-                name: "UnreadPrivateMessages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");

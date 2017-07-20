@@ -96,6 +96,7 @@ div#chat-container {
     .green-message.self {        
         flex-direction: row-reverse;
     }
+
     .green-message-btn {
         flex-direction: row;
     }
@@ -339,30 +340,6 @@ div#chat-container {
     margin: 3px;
     max-width: 800px;
 }
-.from-me:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    bottom: -2px;
-    right: -7px;
-    height: 20px;
-    border-right: 20px solid rgb(187, 239, 124);
-    border-bottom-left-radius: 16px 14px;
-    -webkit-transform: translate(0, -2px);
-}
-.from-me:after {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    bottom: -2px;
-    right: -56px;
-    width: 26px;
-    height: 20px;
-    background: white;
-    border-bottom-left-radius: 10px;
-    -webkit-transform: translate(-30px, -2px);
-}
-
 .from-them {
     position: relative;
     padding: 10px 20px;
@@ -372,27 +349,4 @@ div#chat-container {
     float: left;
     margin: 3px;
     max-width: 800px;
-}
-.from-them:before {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    bottom: -2px;
-    left: -7px;
-    height: 20px;
-    border-left: 20px solid rgb(187, 239, 124);
-    border-bottom-right-radius: 16px 14px;
-    -webkit-transform: translate(0, -2px);
-}
-.from-them:after {
-    content: "";
-    position: absolute;
-    z-index: 3;
-    bottom: -2px;
-    left: 4px;
-    width: 26px;
-    height: 20px;
-    background: white;
-    border-bottom-right-radius: 10px;
-    -webkit-transform: translate(-30px, -2px);
 }

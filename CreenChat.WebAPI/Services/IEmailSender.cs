@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CreenChat.WebAPI.Services
+namespace GreenChat.WebAPI.Services
 {
     public interface IEmailSender
     {

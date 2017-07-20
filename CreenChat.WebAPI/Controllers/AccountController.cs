@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
-using CreenChat.WebAPI.Models.AccountModels;
-using CreenChat.WebAPI.Services;
 using GreenChat.BLL.DTO;
 using GreenChat.BLL.Services;
+using GreenChat.WebAPI.Models.AccountModels;
+using GreenChat.WebAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace CreenChat.WebAPI.Controllers
+namespace GreenChat.WebAPI.Controllers
 {
     [Authorize]
     public class AccountController : Controller
