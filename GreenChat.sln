@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenChat.DAL", "GreenChat.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenChat.BLL", "GreenChat.BLL\GreenChat.BLL.csproj", "{93E3158C-F6E9-411F-9A25-F9018A362704}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenChat.WebAPI", "CreenChat.WebAPI\GreenChat.WebAPI.csproj", "{6FFCC747-94CD-4875-A43E-E1F78BF90ECE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenChat.WebAPI", "GreenChat.WebAPI\GreenChat.WebAPI.csproj", "{6FFCC747-94CD-4875-A43E-E1F78BF90ECE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenChat.Data", "GreenChat.Data\GreenChat.Data.csproj", "{03865F5C-82B4-48A0-A1F9-13A3563913A2}"
 EndProject

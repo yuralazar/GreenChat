@@ -1,5 +1,5 @@
 <li [ngClass]="{'green-message':true, 'self': !message.incoming}">
-    <div class="green-date">
+    <div class="green-date navbar-collapse">
         {{message.content.date | datex :'HH:mm'}}
     </div>
     <div [ngClass]="{'from-them':message.incoming,
