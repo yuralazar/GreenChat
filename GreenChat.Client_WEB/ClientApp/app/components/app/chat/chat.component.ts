@@ -14,6 +14,7 @@ import {ChatGlobalsService} from "../../../services/chat-globals.service";
 import {MessagesService} from "../../../services/message-service";
 import {FriendsService} from "../../../services/friends.service";
 import {Subscription} from "rxjs/Subscription";
+import {MessageStatus} from "../../../models/MessageState";
 
 @Component({
     selector: 'chat',
@@ -58,7 +59,6 @@ export class ChatComponent implements OnInit{
     }
 
     ownerActivated(){
-        this.manageUnreadMessages();
         this.getHistory();
         this.messagesFieldComponent.needToScrollDown = true;
     }
@@ -89,6 +89,9 @@ export class ChatComponent implements OnInit{
             case 10: this.initialInfo(messageArgs); break;
             case 11: this.privateMessages(messageArgs); break;
             case 12: this.chatMessages(messageArgs); break;
+
+            case 14: this.privateMessageStatus(messageArgs); break;
+            case 15: this.chatMessageStatus(messageArgs); break;
             default:
         };
     }
@@ -104,6 +107,8 @@ export class ChatComponent implements OnInit{
         this.showFriendRequests(data.friends);
         this.showChatRequests(data.chatRequests);
         this.addUnreadMessages(data);
+        this.sendPrivateMessagesStatus(data.privateMessages);
+        this.sendChatMessagesStatus(data.chatMessages);
     }
 
     private userFound(data: any) {
@@ -133,7 +138,15 @@ export class ChatComponent implements OnInit{
     }
 
     private privateMessage(data: any) {
-        this.messagesFieldComponent.createAndAppendPrivateMessage(data.userFrom, data.message);
+        if (this.chatGlobals.isCurrentUser(data.userFrom))
+            this.privateMessagesService.updateMessage(data.message.id, data.userTo, data.idNew);
+        else{
+            this.messagesFieldComponent.createAndAppendPrivateMessage(data.userFrom, data.message);
+            this.wsMessageService.privateMessageStatus(data.userFrom, data.message.id, MessageStatus.Delivered)
+            if (this.chatGlobals.isCurrentFriend(data.userFrom))
+                this.wsMessageService.privateMessageStatus(data.userFrom, data.message.id, MessageStatus.Seen)
+        }
+
         if (this.chatGlobals.isCurrentFriend(data.userFrom)){
             this.messagesFieldComponent.needToScrollDown = true;
         }
@@ -234,18 +247,6 @@ export class ChatComponent implements OnInit{
         }
     }
 
-    private manageUnreadMessages() {
-        let currentOwner = this.chatGlobals.getCurrentOwner();
-        let service = this.currentMessageService();
-        let messageContainer = service.getContainerByOwner(currentOwner);
-        if (messageContainer.countNew() > 0){
-            messageContainer.unmarkNew();
-            if (!messageContainer.historyLoaded) {
-                service.deleteUnreadMessages(currentOwner);
-            }
-        }
-    }
-
     private currentMessageService(){
         return this.chatGlobals.getCurrentMessageService(this.privateMessagesService, this.chatMessagesService);
     }
@@ -275,5 +276,21 @@ export class ChatComponent implements OnInit{
 
     private addFriend(user: User) {
         this.wsMessageService.addOrConfirmFriend(user, true, false);
+    }
+
+    private privateMessageStatus(data: any) {
+        this.privateMessagesService.changeMessageStatus(data.id, data.userTo, data.status);
+    }
+
+    private chatMessageStatus(data: any) {
+        this.chatMessagesService.changeMessageStatus(data.id, data.chat, data.status);
+    }
+
+    private sendPrivateMessagesStatus(privateMessages: any) {
+        privateMessages.forEach(mess => this.wsMessageService.privateMessageStatus(mess.userFrom, mess.message.id, MessageStatus.Delivered));
+    }
+
+    private sendChatMessagesStatus(chatMessages: any) {
+        chatMessages.forEach(mess => this.wsMessageService.chatMessageStatus(mess.chat, mess.message.id, MessageStatus.Delivered));
     }
 }

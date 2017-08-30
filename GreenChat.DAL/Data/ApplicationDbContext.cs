@@ -46,18 +46,6 @@ namespace GreenChat.DAL.Data
                 .HasForeignKey(u => u.SenderID)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<UnreadPrivateMessage>()
-                .HasOne(u => u.Receiver)
-                .WithMany(f => f.UnreadReceivers)
-                .HasForeignKey(u => u.ReceiverID)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<UnreadPrivateMessage>()
-                .HasOne(u => u.Sender)
-                .WithMany(f => f.UnreadSenders)
-                .HasForeignKey(u => u.SenderID)
-                .OnDelete(DeleteBehavior.Restrict);
-
             builder.Entity<ChatMessage>()
                 .HasOne(m => m.ChatRoomUser)
                 .WithMany(user => user.NavChatMessages)
@@ -67,27 +55,6 @@ namespace GreenChat.DAL.Data
             builder.Entity<ChatMessage>()
                 .HasOne(m => m.ChatRoom)
                 .WithMany(room => room.NavChatMessages)
-                .HasForeignKey(message => message.ChatRoomID)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<UnreadChatMessage>()
-                .HasOne(m => m.ChatRoomUserFrom)
-                .WithMany(user => user.NavUnreadChatMessages1)
-                .HasForeignKey(message => message.ChatRoomUserFromID)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<UnreadChatMessage>()
-                .HasOne(m => m.ChatRoomUserTo)
-                .WithMany(user => user.NavUnreadChatMessages2)
-                .HasForeignKey(message => message.ChatRoomUserToID)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<UnreadChatMessage>()
-                .HasOne(m => m.ChatRoom)
-                .WithMany(room => room.NavUnreadChatMessages)
                 .HasForeignKey(message => message.ChatRoomID)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
@@ -111,13 +78,13 @@ namespace GreenChat.DAL.Data
 
         public DbSet<PrivateMessage> PrivateMessages { get; set; }
 
-        public DbSet<UnreadPrivateMessage> UnreadPrivateMessages { get; set; }
+        public DbSet<PrivateMessageStatus> PrivateMessageStatuses { get; set; }
 
         public DbSet<Friend> Friends { get; set; }
 
         public DbSet<ChatMessage> ChatMessages { get; set; }
 
-        public DbSet<UnreadChatMessage> UnreadChatMessages { get; set; }
+        public DbSet<ChatMessageStatus> ChatMessageStatuses { get; set; }
 
         public DbSet<ChatRoom> ChatRooms { get; set; }
 
@@ -130,8 +97,8 @@ namespace GreenChat.DAL.Data
         public ApplicationDbContext Create(DbContextFactoryOptions options)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            //optionsBuilder.UseSqlServer("Server=192.168.0.24;Database=TestChatDb2;User Id=test;Password=GreenChatTest;MultipleActiveResultSets=true;");            
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=ChatDB3");
+            optionsBuilder.UseSqlServer("Server=192.168.0.24;Database=TestChatDb3;User Id=test;Password=GreenChatTest;MultipleActiveResultSets=true;");            
+            //optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=ChatDB3");
             return new ApplicationDbContext(optionsBuilder.Options);
         }
     }

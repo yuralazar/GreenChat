@@ -9,5 +9,7 @@ namespace GreenChat.Data.MessageTypes.RecieveArgs
         public MessageInfo Message { get; set; }
         [JsonProperty("userTo")]
         public UserInfo UserTo { get; set; }
+        [JsonProperty("idNew")]
+        public int IdNew { get; set; }
     }
 }

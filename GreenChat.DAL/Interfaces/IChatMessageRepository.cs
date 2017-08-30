@@ -9,5 +9,6 @@ namespace GreenChat.DAL.Interfaces
     {
         Task<ChatMessage> AddChatMessage(ApplicationUser userFrom, int chatId, string content, DateTimeOffset date);        
         Task<List<ChatMessage>> GetMessagesPortionBeforeDate(int chatId, int count, DateTimeOffset date);
+        Task<List<ChatMessage>> GetNotSeen(string userId);
     }
 }

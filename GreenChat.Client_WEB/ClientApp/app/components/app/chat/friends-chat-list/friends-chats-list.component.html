@@ -5,9 +5,13 @@
             <li *ngFor="let friend of friends">
                 <div [ngClass]="{ 'green-friend' : true, online : friendIsOnline(friend), active : friendIsActive(friend)}" (click)="activateFriend(friend)">
                     <div class="owner-content">
-                        <avatar [email]="friend.email" [displayType]="'circle'" [size]="50"></avatar>
-                        <div class="owner-name">{{friend.email}}</div>
-                        <div class="owner-count anim" *ngIf="countNewPrivate(friend)>0">{{countNewPrivate(friend)}}</div>
+                        <div class="owner-name">
+                            <avatar [email]="friend.email" [displayType]="'circle'" [size]="50"></avatar>
+                            {{friend.email}}
+                        </div>
+                        <div class="owner-count anim" *ngIf="countNewPrivate(friend)>0">
+                            {{countNewPrivate(friend)}}
+                        </div>
                     </div>
                 </div>
             </li>
@@ -20,7 +24,9 @@
                     <div class="owner-content">
                         <avatar [email]="chat.name" [displayType]="'circle'" [size]="50"></avatar>
                         <div class="owner-name">{{chat.name}}</div>
-                        <div class="owner-count anim" *ngIf="countNewChat(chat)>0">{{countNewChat(chat)}}</div>
+                        <div class="owner-count anim" *ngIf="countNewChat(chat)>0">
+                            {{countNewChat(chat)}}
+                        </div>
                     </div>
                 </div>
             </li>

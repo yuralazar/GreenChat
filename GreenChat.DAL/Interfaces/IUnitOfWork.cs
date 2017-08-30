@@ -15,9 +15,9 @@ namespace GreenChat.DAL.Interfaces
         //RoleManager<ApplicationRole> RoleManager { get; }
         IFriendRepository Friends { get; }
         IChatMessageRepository ChatMessages { get; }
-        IUnreadChatMessageRepository UnreadChatMessages { get; }
         IPrivateMessageRepository PrivateMessages { get; }
-        IUnreadPrivateMessageRepository UnreadPrivateMessages { get; }
+        IPrivateMessageStatusesRepository PrivateMessageStatuses { get; }
+        IChatMessageStatusesRepository ChatMessageStatuses { get; }
         IChatRoomRepository ChatRooms { get; }
         IChatRoomUserRepository ChatRoomUsers { get;}
 

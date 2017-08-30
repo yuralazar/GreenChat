@@ -52,8 +52,13 @@ namespace GreenChat.BLL.WebSockets
         
         public IReadOnlyCollection<WebSocket> GetSocketsByUser(ApplicationUser user)
         {
-            var dict = _userSockets.ContainsKey(user.Id) ? _userSockets[user.Id] : null;
-            if (dict == null) return null;            
+            return GetSocketsByUser(user.Id);
+        }
+
+        public IReadOnlyCollection<WebSocket> GetSocketsByUser(string userId)
+        {
+            var dict = _userSockets.ContainsKey(userId) ? _userSockets[userId] : null;
+            if (dict == null) return null;
             var list = new List<WebSocket>();
             var coll = new ReadOnlyCollection<WebSocket>(list);
             list.AddRange(dict.Select(pair => pair.Value)

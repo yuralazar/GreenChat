@@ -10,13 +10,9 @@ namespace GreenChat.DAL.Models
         public string LastName { get; set; }
 
         //Navigation properties
-        public virtual ICollection<PrivateMessage> Receivers { get; set; }
+        public virtual ICollection<PrivateMessage> Receivers { get; set; }        
 
-        public virtual ICollection<UnreadPrivateMessage> UnreadReceivers { get; set; }
-
-        public virtual ICollection<PrivateMessage> Senders { get; set; }
-
-        public virtual ICollection<UnreadPrivateMessage> UnreadSenders { get; set; }
+        public virtual ICollection<PrivateMessage> Senders { get; set; }        
 
         public virtual ICollection<Friend> Friends1 { get; set; }
 

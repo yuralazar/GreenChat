@@ -4,6 +4,7 @@ import {Message} from "../models/Message";
 import {Chat} from "../models/Chat";
 import {ChatGlobalsService} from "./chat-globals.service";
 import {ChatService} from "./chat.service";
+import {MessageStatus} from "../models/MessageState";
 
 @Injectable()
 export class WsMessageService{
@@ -14,30 +15,32 @@ export class WsMessageService{
                 private chatService : ChatService) {
     }
 
-    sendMessage( message: {text: string, date:Date}) {
+    sendMessage( message: {text: string, date:Date}, newId : number) {
         if (this.chatGlobals.privateMode()){
-            return this.sendPrivate(this.chatGlobals.currentFriend, message);
+            return this.sendPrivate(this.chatGlobals.currentFriend, message, newId);
         }else {
-            return this.sendChat(this.chatGlobals.currentChat, message);
+            return this.sendChat(this.chatGlobals.currentChat, message, newId);
         }
     }
 
-    public sendPrivate(user : User, message: {text: string, date:Date}) {
+    public sendPrivate(user : User, message: {text: string, date:Date}, newId : number) {
         let args =
             {
                 "userFrom": this.chatGlobals.currentUser,
                 "message": message,
-                "userTo": user
+                "userTo": user,
+                "idNew" : newId
             };
         return this.sendJsonMessage(0, args);
     }
 
-    public sendChat(chat: Chat, message: {text: string, date:Date}) {
+    public sendChat(chat: Chat, message: {text: string, date:Date}, newId : number) {
         let args =
             {
                 "userFrom": this.chatGlobals.currentUser,
                 "message": message,
-                "chat": chat
+                "chat": chat,
+                "idNew" : newId
             };
         return this.sendJsonMessage(1, args);
     }
@@ -136,6 +139,28 @@ export class WsMessageService{
         return this.sendJsonMessage(10, args);
     }
 
+    privateMessageStatus(user : User, messId : number, status : MessageStatus) {
+        let args =
+            {
+                "userTo": this.chatGlobals.currentUser,
+                "userFrom": user,
+                "id" : messId,
+                "status" : status
+            };
+        return this.sendJsonMessage(11, args);
+    }
+
+    chatMessageStatus(currentChat: Chat, messId: number, status: MessageStatus) {
+        let args =
+            {
+                "userFrom": this.chatGlobals.currentUser,
+                "chat": currentChat,
+                "id" : messId,
+                "status" : status
+            };
+        return this.sendJsonMessage(12, args);
+    }
+
     private sendJsonMessage(type : number, args : any) : string{
         let obj =
             {
@@ -146,6 +171,5 @@ export class WsMessageService{
         this.chatService.messageData.next(mess);
         return mess;
     }
-
 
 }

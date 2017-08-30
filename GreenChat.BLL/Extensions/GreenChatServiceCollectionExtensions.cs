@@ -42,9 +42,9 @@ namespace GreenChat.BLL.Extensions
             services.AddTransient<UserService>();
             services.AddTransient<IFriendRepository, FriendRepository>();
             services.AddTransient<IChatMessageRepository, ChatMessageRepository>();
-            services.AddTransient<IUnreadChatMessageRepository, UnreadChatMessageRepository>();
             services.AddTransient<IPrivateMessageRepository, PrivateMessageRepository>();
-            services.AddTransient<IUnreadPrivateMessageRepository, UnreadPrivateMessageRepository>();
+            services.AddTransient<IPrivateMessageStatusesRepository, PrivateMessageStatusesRepository>();
+            services.AddTransient<IChatMessageStatusesRepository, ChatMessageStatusesRepository>();
             services.AddTransient<IChatRoomUserRepository, ChatRoomUsersRepository>();
             services.AddTransient<IChatRoomRepository, ChatRoomRepository>();
             services.AddTransient<TestDataLoader>();

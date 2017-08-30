@@ -9,9 +9,7 @@ namespace GreenChat.Data.MessageTypes.SendArgs
         public ChatInfo Chat { get; set; }
         [JsonProperty("message")]
         public MessageInfo Message { get; set; }
-
-        public SendChatArguments()
-        {
-        }
+        [JsonProperty("idNew")]
+        public int IdNew { get; set; }
     }
 }

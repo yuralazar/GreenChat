@@ -18,7 +18,9 @@ namespace GreenChat.Data.MessageTypes
             { 7, new RecieveMethodAndType("ReadPrivateMessages", typeof(ReadPrivateMessagesArguments)) },
             { 8, new RecieveMethodAndType("ReadChatMessages", typeof(ReadChatMessagesArguments)) },
             { 9, new RecieveMethodAndType("GetPrivateMessages", typeof(GetPrivateMessagesArguments)) },
-            { 10, new RecieveMethodAndType("GetChatMessages", typeof(GetChatMessagesArguments)) }
+            { 10, new RecieveMethodAndType("GetChatMessages", typeof(GetChatMessagesArguments)) },
+            { 11, new RecieveMethodAndType("PrivateMessageStatus", typeof(PrivateStatusArguments)) },
+            { 12, new RecieveMethodAndType("ChatMessageStatus", typeof(ChatStatusArguments)) }
         };
 
         public static string GetRecieveMethod(int typeNumber)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using GreenChat.Data.Instances;
 using GreenChat.DAL.Data;
 using GreenChat.DAL.Interfaces;
 using GreenChat.DAL.Models;
@@ -16,48 +17,8 @@ namespace GreenChat.DAL.Repositories
     {
         public ChatMessageRepository(ApplicationDbContext context, ILoggerFactory factory) : base(context, factory)
         {
+            DbSet = Context.ChatMessages;
         }
-
-        public override IQueryable<ChatMessage> GetAll()
-        {
-            return Context.ChatMessages;
-        }
-
-        public override Task<ChatMessage> Get(int id)
-        {
-            return Context.ChatMessages.FindAsync(id);
-        }
-
-        public override IQueryable<ChatMessage> Find(Expression<Func<ChatMessage, bool>> predicate)
-        {
-            return Context.ChatMessages.Where(predicate);
-        }
-
-        public override async Task Create(ChatMessage item)
-        {
-            await Context.ChatMessages.AddAsync(item);
-            await SaveChages();
-        }
-
-        public override void Update(ChatMessage item)
-        {
-            Context.Entry(item).State = EntityState.Modified;
-        }
-
-        public override async Task Delete(int id)
-        {
-            var chatMessage = await Context.ChatMessages.FindAsync(id);
-            Context.ChatMessages.Remove(chatMessage);
-            await SaveChages();
-        }
-
-        public override void Delete(ChatMessage chatMessage)
-        {
-            Context.ChatMessages.Remove(chatMessage);
-            SaveChages();
-        }
-
-        private bool _disposed = false;
 
         public async Task<ChatMessage> AddChatMessage(ApplicationUser userFrom, int chatId, string content, DateTimeOffset date)
         {
@@ -89,22 +50,38 @@ namespace GreenChat.DAL.Repositories
             return list.OrderBy(message => message.Date).ToList();
         }
 
-        protected virtual void Dispose(bool disposing)
+        public async Task<List<ChatMessage>> GetNotSeen(string userId)
         {
-            if (!this._disposed)
-            {
-                if (disposing)
-                {
-                    Context.Dispose();
-                }
-            }
-            this._disposed = true;
-        }
+            var list =
+                from statuses in
+                (from statuses1 in
+                     Context.ChatMessageStatuses
+                 where statuses1.UserId == userId
+                 join lastStatuses in
+                 (from statuses0 in Context.ChatMessageStatuses
+                  where statuses0.UserId == userId
+                  group statuses0 by statuses0.ChatMessageId
+                     into statusesGroup
+                  select new
+                  {
+                      ChatMessageId = statusesGroup.Key,
+                      Date = (from stat in statusesGroup
+                              select stat.Date).Max()
+                  }
+                 )
+                 on new { statuses1.ChatMessageId, statuses1.Date } equals
+                 new { lastStatuses.ChatMessageId, lastStatuses.Date }
+                 select new { statuses1.Status, statuses1.ChatMessageId })
+                where statuses.Status != MessStatus.Seen
+                select statuses.ChatMessageId;
 
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }        
+
+            return await Context.ChatMessages
+                .Where(message => list.Contains(message.ChatMessageID))
+                .Include(message => message.ChatRoom)
+                .Include(message => message.ChatRoomUser)
+                .ThenInclude(chatUser => chatUser.User)
+                .ToListAsync();
+        }
     }
 }
